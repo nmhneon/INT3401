@@ -1,0 +1,139 @@
+TRÌNH BÀY BÁO CÁO KẾT QUẢ P1 - INT3401 9
+
+Em tên là Nguyễn Mạnh Hùng, MSSV: 17020790
+
+Do mic của em gặp vấn đề nên em sẽ sử dụng phụ đề để thuyết minh
+
+Trong phần này em sẽ mô tả code, chạy thử và autograder P1.
+
+P1 có 8 parts, tính đến thời điểm demo em đã hoàn thiện 5 part đầu. Sau khi nghe phân tích của các bạn,
+em đã hoàn thành được part 6 và 7.
+
+8 part P1 chia làm 2 phần: 4 part đầu chỉnh sửa file search.py đề implement 4 thuật toán search: DFS, BFS, A* và UCS
+
+4 part sau trong searchAgent.py để cài đặt heuristic cho 1 số yêu cầu cụ thể.
+
+Với 4 bài đầu, giải thuật cơ bản là tương tự nhau.
+Điểm khác nhau là cấu trúc được sử dụng để cài đặt fringe.
+Vì vậy, em quyết định định nghĩa hàm generalSearch() để implement giải thuật, sau đó truyền fringe tương ứng vào cho từng thuật cụ thể.
+
+
+Đây là hàm generalSearch()
+Nó bao gồm 3 tham số:
+	+problem là bài toán đưa ra
+	+fringe: là cấu trúc fringe. Tùy vào giải thuật, fringe này sẽ là stack(DFS),queue(BFS),priorityQueue(uCS và A* với hàm tình cost riêng)
+	+Riêng với thuật toán A*, ta cần 1 Heuristic nên có tham số Heuristic.
+	Các bài toán còn lại, heuristic mặc định là 0.
+
+Trong hàm generalSearch, khởi tạo 2 list visited cho các state đã được duyệt và path cho quãng đường tương ứng để đến 1 state
+
+Ban đầu ta check xem state ban đầu có phải goal.
+Nếu đúng thì ta xong bài toán
+
+Bước khởi tạo:
+Đưa startingState vào fringe.
+Tùy vào thuật toán và cấu trúc fringe, phần tử của fringe sẽ có cấu trúc khác nhau.
+
+Với BFS và DFS, phần tử bao gồm 2 thuộc tính:
+	+state
+	+và path để đến state này.
+	startingState trong fringe sẽ có dạng như sau:
+
+
+Với UCS, phần tử cần thêm giá trị cost để lưu cost của nó so với startingState, cũng dùng làm cost cho priorityQueue.
+
+Cost của startingState=0
+
+Phần tử fringe A* tương tự BFS, DFS.
+
+Lặp đi lặp lại đén khi fringe rỗng:
+
+Đầu tiên pop đỉnh fringe.
+
+Tùy vào cấu trúc fringe mà đỉnh có thể là sâu nhất hoặc nông nhất hoặc có cost nhỏ nhất.
+
+Riêng với trường hợp A*, ta không đi qua các phần tử đã xet, vì vậy nếu state nằm trong visited thì ta bỏ qua.
+
+Nếu state vừa lấy là goal thì return, thoát
+
+Nếu không, ta bắt đầu xét các con của nó. Nếu 1 con chưa được đi qua:
+	+TH stack ta đưa state và path tương ứng ủa nó vào fringe
+	+TH queue cần bổ sung 1 điều kiện, nếu con này đã nằm trong fringe thì ta ko đưa nó vào nữa.
+	Nếu ta cứ đưa vào thì sẽ dẫn đến lặp lại vô hạn.
+	+TH UCS, fringe là priorityQueue ta cần xem xét con đã nằm trong fringe chưa:
+		+nếu chưa, ta đưa vào như bình thường.
+		+nếu rồi, ta phải kiểm tra cost hiện tại của con có nhỏ hơn giá trị trong fringe ko.
+		Nếu nhỏ hơn thì ta sẽ thay path và cost mới vào fringe.
+		
+ĐÃ hoàn thành generalSearch.
+
+Bây giờ, tùy thuật toán cụ thể ta sẽ truyền fringe tương ứng vào:
+	+DFS: fringe là 1 stack
+	+BFS: fringe là 1 queue
+	+UCS: fringe là 1 priorityQueue
+	+A*: fringe là 1 priorityQueueWithFunction: function tính cost sẽ là hàm g(state)+h(state) trong thuật
+		
+Bây giờ em sẽ chạy demo và autograder		
+		
+với dfs, pacman đi nhanh, duyệt 1 đường	
+
+Với bfs: bfs duyệt gần hết bản đồ nếu
+so với dfs. 
+
+Với UCS:
+
+
+Done
+
+Autograder:
+
+Thời gian bị khựng do tính toán câu 7.
+
+
+Câu 5 yêu cầu thiết kế problem cho yêu cầu của bài toán 4 góc.
+Pacman sẽ phải đi qua cả 4 corner để win
+
+
++để khởi tạo, ngoài các thuộc tính của class, em bổ sung list 4 số thể hiện 4 góc đã đi qua chưa.
+0 khi chưa đi qua, 1 là đã.
+
++startingState sẽ là vị trí khởi đầu của pacman và 4 điểm kia.
+
++goal là khi pacman đã đi qua cả 4 góc, tức là toàn bộ initialState đều bằng 1
+
++với hàm lấy successor là 1 bước đi của pacman đến 1 vị trí không dính tường và giá trị 4 góc lúc đó
+
+
+Demo:
+
+câu 6: Yêu cầu thiết kế heuristic cho problem corner ở trên.
+heuristic em chọn là khoảng cách mahattan lớn nhất từ pacman từ những corner chưa đi qua.
+
+Dễ dàng chứng minh được nó là consistent
+
+Demo:
+
+câu 7:
+Trong câu 7, vấn đề đặt ra là pacman phải ăn hết dot
+dựa vào phần demo của các bạn, em luwacj chọn heuristic là khoảng cách bình thường (đi theo mê cung) lớn nhất của pacman tới các food chưa ăn nếu đi theo bfs
+
+Demo:
+
+Số node duyệt là 4137, tuy nhiên thời gian tính toán rất lâu: 25,6s do phải chạy bfs nhiều lần.
+
+Autograder:
+
+Số câu hoàn thành: 7/8
+Điểm 23/25
+
+Phần trình bày này em sẽ gửi trên GitHub.
+Em cảm ơn thầy đã theo dõi!
+
+
+
+
+
+
+
+
+
