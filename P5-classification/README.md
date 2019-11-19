@@ -1,4 +1,5 @@
 #P5: CLASSIFICATION
+
 Mục tiêu của Project này là implement 3 classifier: perceptron, MIRA và một classifier perceptron cho pacman.
 Đồng thời ta cũng cần tìm các features giúp classifier phân biệt chữ số và các agents của pacman.
 
