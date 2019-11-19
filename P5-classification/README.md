@@ -1,4 +1,4 @@
-#P5: CLASSIFICATION
+# P5: CLASSIFICATION
 
 Mục tiêu của Project này là implement 3 classifier: perceptron, MIRA và một classifier perceptron cho pacman.
 Đồng thời ta cũng cần tìm các features giúp classifier phân biệt chữ số và các agents của pacman.
@@ -12,7 +12,9 @@ Bài 2 là tìm ra 100 features có weight lớn nhất với các chữ số kh
 Sau khi chạy, các feature hiện ra như hình a.
 Do cách viết chữ số là khác nhau, nên các điểm có trọng số lớn nhất là rời rạc chứ không liền mạch như hình b
 (Demo)
-	python dataClassifier.py -c perceptron -w
+```
+python dataClassifier.py -c perceptron -w
+```
 
 ## 4. Question 4: Digit Feature Design
 
@@ -26,10 +28,14 @@ Nếu đó là một vùng kín, việc lan đó sẽ bị giới hạn. Nếu k
 Ta có 4 features tương ứng với số vùng kín như code.
 Đếm số vùng kín sau khi tìm được, ta sẽ có feature đủ để đạt yêu cầu đề bài.
 (Demo)
-	python dataClassifier.py -d digits -c naiveBayes -f -a -t 1000  
-		->Kết quả validation set: 83%
-		->Kết quả trên test set: 85%>84%
-	python autograder.py -q q4
+```
+python dataClassifier.py -d digits -c naiveBayes -f -a -t 1000  
+```
+->Kết quả validation set: 83%
+->Kết quả trên test set: 85%>84%
+```		
+python autograder.py -q q4
+```
 	
 ## 5. Question 5: Behavioral Cloning
 
@@ -37,8 +43,10 @@ Bài 5 là thay đổi perceptron một chút để làm classifier cho pacman.
 Nhìn chung nó không khác quá nhiều, tuy nhiên ta chỉ có 1 w chung cho các trường hợp.
 Khi đoán đúng, trọng số sẽ được tăng lên f(s,a) đúng. Ngược lại, nó sẽ bị giảm đi f(s,a′) sai.
 (Demo)
-	python dataClassifier.py -c perceptron -d pacman
-		->Kết quả trên test: 84%
+```
+python dataClassifier.py -c perceptron -d pacman
+```
+->Kết quả trên test: 84%
 
 ## 6. Question 6: Pacman Feature Design
 
@@ -52,7 +60,11 @@ Bài 6 là thiết kế feature để phân biệt hành vi các agent pacman.
    + điểm mới
    + khoảng cách đến Food gần nhất
 (Demo)
-	python dataClassifier.py -c perceptron -d pacman -f -g ContestAgent -t 1000 -s 1000
-		-> với contestAgent, kết quả là 91%
-	python dataClassifier.py -c perceptron -d pacman -f -g SuicideAgent -t 1000 -s 1000
-		-> với suicideAgent, kết quả là 84%
+```
+python dataClassifier.py -c perceptron -d pacman -f -g ContestAgent -t 1000 -s 1000
+```
+-> với contestAgent, kết quả là 91%
+```
+python dataClassifier.py -c perceptron -d pacman -f -g SuicideAgent -t 1000 -s 1000
+```
+-> với suicideAgent, kết quả là 84%
